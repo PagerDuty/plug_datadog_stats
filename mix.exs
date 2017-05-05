@@ -1,9 +1,9 @@
-defmodule PlugRequestStatsd.Mixfile do
+defmodule PlugDatadogStats.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :plug_request_statsd,
-     version: "0.1.0",
+    [app: :plug_datadog_stats,
+     version: "1.0.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
