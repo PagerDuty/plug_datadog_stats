@@ -1,4 +1,4 @@
-defmodule PlugDatadogStats do  
+defmodule PlugRequestStatsd do  
   @behaviour Plug
   import Plug.Conn, only: [register_before_send: 2]
   require Logger
@@ -7,7 +7,7 @@ defmodule PlugDatadogStats do
     %{metric_name: get_metric_name()}
   end
 
-  defp get_metric_name, do: Application.get_env(:plug_datadog_stats, :metric_name, "resp_time")
+  defp get_metric_name, do: Application.get_env(:plug_request_statsd, :metric_name, "resp_time")
 
   def call(conn, %{metric_name: metric_name}) do
     req_start_time = :os.timestamp
@@ -19,7 +19,7 @@ defmodule PlugDatadogStats do
       req_end_time = :os.timestamp
       duration = :timer.now_diff(req_end_time, req_start_time)
 
-      Logger.debug("PlugDatadogStats: #{duration}µs #{metric_name} #{inspect tags}")
+      Logger.debug("PlugRequestStatsd: #{duration}µs #{metric_name} #{inspect tags}")
       ExStatsD.histogram(duration, metric_name, tags: tags)
 
       conn
