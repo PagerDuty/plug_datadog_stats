@@ -20,7 +20,7 @@ defmodule PlugDatadogStats do
       req_end_time = :os.timestamp
       duration = :timer.now_diff(req_end_time, req_start_time)
 
-      Logger.debug("PlugDatadogStats: #{duration}µs #{metric_name} #{inspect tags}")
+      Logger.debug("PlugDatadogStats: #{duration}µs #{names.histogram}/#{names.count} #{inspect tags}")
       ExStatsD.histogram(duration, names.histogram, tags: tags)
       ExStatsD.increment(names.count, tags: tags)
 
