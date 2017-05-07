@@ -36,16 +36,19 @@ defmodule PlugDatadogStats do
     ]
   end
 
-  # returns the path list as a string, with numeric segment parameters filtered out. 
-  # e.g. path /incidents/10/log_entries returns /incidents/log_entries
   defp generalize_path(path_info) do 
     path_info
-    |> Enum.filter(fn(segment) ->
-      case Integer.parse(segment) do
-        :error -> true
-        _ -> false
-      end
-    end)
+    |> Enum.map(&normalize_segment/1)
     |> Enum.join("/")
+  end
+
+  defp normalize_segment(segment) do
+    if String.match?(segment, ~r/^[0-9]+$/) do
+      "INT"
+    else if String.match?(segment, ~r/^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$/) do
+      "UUID"
+    else
+      segment
+    end
   end
 end
