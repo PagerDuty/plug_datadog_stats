@@ -43,12 +43,13 @@ defmodule PlugDatadogStats do
   end
 
   defp normalize_segment(segment) do
-    if String.match?(segment, ~r/^[0-9]+$/) do
-      "INT"
-    else if String.match?(segment, ~r/^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$/) do
-      "UUID"
-    else
-      segment
+    cond do
+      String.match?(segment, ~r/^[0-9]+$/) ->
+        "INT"
+      String.match?(segment, ~r/^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$/)  ->
+        "UUID"
+      true ->
+        segment
     end
   end
 end
