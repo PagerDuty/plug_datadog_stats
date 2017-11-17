@@ -3,7 +3,7 @@ defmodule PlugDatadogStats.Mixfile do
 
   def project do
     [app: :plug_datadog_stats,
-     version: "2.0.1",
+     version: "2.1.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -22,7 +22,7 @@ defmodule PlugDatadogStats.Mixfile do
   defp deps do
     [
       {:ex_statsd, github: "PagerDuty/ex_statsd", ref: "a5c1aefd1d8d273e3910c2ae53c034669f792400"}, # Pulling in Cees' socket open fix
-      {:plug, "~> 1.3.2"},
+      {:plug, ">= 1.3.2 and ~> 1.3"},
     ]
   end
 end
