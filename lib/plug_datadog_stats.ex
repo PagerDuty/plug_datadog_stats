@@ -36,7 +36,7 @@ defmodule PlugDatadogStats do
     ]
   end
 
-  defp generalize_path(path_info) do 
+  def generalize_path(path_info) do
     path_info
     |> Enum.map(&normalize_segment/1)
     |> Enum.join("/")
