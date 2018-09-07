@@ -1,0 +1,9 @@
+{application,ex_statsd,
+             [{description,"ex_statsd"},
+              {modules,['Elixir.ExStatsD','Elixir.ExStatsD.Application',
+                        'Elixir.ExStatsD.Config','Elixir.ExStatsD.Decorator',
+                        'Elixir.ExStatsD.Supervisor']},
+              {registered,[]},
+              {vsn,"0.5.3"},
+              {applications,[kernel,stdlib,elixir]},
+              {mod,{'Elixir.ExStatsD.Application',[]}}]}.
