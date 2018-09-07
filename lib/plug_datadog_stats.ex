@@ -48,7 +48,7 @@ defmodule PlugDatadogStats do
         "INT"
       String.match?(segment, ~r/^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$/)  ->
         "UUID"
-      String.match?(segment, ~r/(p|q|r)\w{6}/) ->
+      String.match?(segment, ~r/p\w{6}/) ->
         "OBFUSCATED_ID"
       true ->
         segment
