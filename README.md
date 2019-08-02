@@ -45,3 +45,32 @@ defmodule YourPlugBasedThing.Endpoint do
   ...
 end
 ```
+
+## Handling Non-standard Path Parameters
+
+Sometimes we have paths that have path parameters that are not easily
+matchable using regular expressions.
+
+A simple example would be this:
+`/api/v1/status_service/slug/my-custom-slug-4`
+
+A more complex example might look like this:
+`/api/v1/status_service/slug/my-custom-slug-4/views/my-user-readable-view-id`
+
+`PlugDatadogStats` will interpret each of these as a separate path and create a tag
+for all of them which is Not Desirable™.
+
+To handle cases like this, you can pass the plug a `path_normalize_fn`
+option that explicitly matches on the path patterns you expect:
+
+```elixir
+# This can be defined in any other module.  For this example it is defined in the
+# same module that the plug is added to the pipeline
+def path_param_override(["api", "v1", "status_service", "slug", _slug]) do
+  ["api", "v1", "status_service", "slug", "SLUG"]
+end
+
+def path_param_override(path_info), do: path_info # be sure to include the base case
+
+pre_plug PlugDatadogStats, path_normalize_fn: {__MODULE__, :path_param_override, []}
+```
